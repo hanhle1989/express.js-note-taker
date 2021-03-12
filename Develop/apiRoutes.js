@@ -4,7 +4,7 @@ const fs = require("fs");
 
 //API Routing: 
 module.exports = (app) => {
-    let noteList = JSON.parse(fs.readFileSync('../db/db.json', 'utf8'));
+    let noteList = JSON.parse(fs.readFileSync('./Develop/db/db.json', 'utf8'));
 
     app.get("/api/notes", (req, res) => {
         return res.json(noteList);

@@ -7,8 +7,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "./Develop/public"));
 app.use(express.json());
 
-require("./Develop/routes/apiRoutes")(app);
-require(".Develop/routes/htmlRoutes")(app);  
+require("./Develop/apiRoutes")(app);
+require("./Develop/htmlRoutes")(app);  
 
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
