@@ -1,37 +1,33 @@
+// const dbJSON = require('./db/db.json');
+
 const fs = require("fs");
 
-module.exports = function(app) {
-  app.get("/api/notes", function(req, res) {
-    fs.readFile("./db/db.json", (err, data) => {
-      if (err) throw err;
-      dbData = JSON.parse(data);
-      res.send(dbData);
+//API Routing: 
+module.exports = (app) => {
+    let noteList = JSON.parse(fs.readFileSync('../db/db.json', 'utf8'));
+
+    app.get("/api/notes", (req, res) => {
+        return res.json(noteList);
     });
-  });
 
+    app.post('/api/notes', (req, res) => {
+        let lastId;
+        if (noteList.length) {
+            lastId = Math.max(...(noteList.map(note => note.id)));
+        } else {
+            lastId = 0;
+        }
 
-app.post("/api/notes", function(req, res) {
-  const newNotes = req.body;
+        const id = lastId ++;
 
-  fs.readFile("./db/db.json", (err, data) => {
-    if (err) throw err;
-    dbData = JSON.parse(data);
-    dbData.push(newNotes);
-    let number = 1;
-    dbData.forEach((note, index) => {
-      note.id = number;
-      number++;
-      return dbData;
+        noteList.push({ id, ...req.body });
+        res.json(noteList.slice(-1));
     });
-    console.log(dbData);
 
-    stringData = JSON.stringify(dbData);
+    // delete note
+    app.delete('/api/notes/:id', (req, res) => {
+      let findNote = noteList.find(({ id }) => id === JSON.parse(req.params.id));
 
-    fs.writeFile('./db/db.json', stringData, (err, data) => {
-      if (err) throw err;
+        noteList.splice(noteList.indexOf(findNote), 1);
     });
-  });
-  res.send('Your note has been saved');
-});
-
-}
+};
