@@ -6,9 +6,7 @@ const fs = require("fs");
 module.exports = (app) => {
     let noteList = JSON.parse(fs.readFileSync('./Develop/db/db.json', 'utf8'));
 
-    app.get("/api/notes", (req, res) => {
-        return res.json(noteList);
-    });
+    app.get('/api/notes', (req, res) => res.json(noteList));
 
     app.post('/api/notes', (req, res) => {
         let lastId;
@@ -20,7 +18,7 @@ module.exports = (app) => {
 
         const id = lastId ++;
 
-        noteList.push({ id, ...req.body });
+        noteList.push(id, req.body);
         res.json(noteList.slice(-1));
     });
 
