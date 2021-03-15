@@ -15,13 +15,15 @@ module.exports = (app) => {
 }
 
 app.post('/api/notes', (req, res) => {
+    let savedNotes = req.body;
+    savedNotes.id = Date.now().toString;
+
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
-        const newNote = req.body;
-        console.log(req.body);
-        tempArray.push(newNote);
-        console.log("POST request Started");
-        console.log(tempArray);
-        addNoteToDb(JSON.stringify(tempArray));
-        res.json(req.body);
+        if (err) {
+            console.log(err);
+            var postNotes = JSON.parse(data)
+            postNotes.push(savedNotes);
+
+        };
     });
 });
