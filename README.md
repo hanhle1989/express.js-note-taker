@@ -35,8 +35,6 @@ THEN I am presented with empty fields to enter a new note title and the note’s
 
 * [Application deployed at live URL (Heroku)](https://hanh-note-taker.herokuapp.com/)
 
-* [Application GitHub URL](https://hanhle1989.github.io/express.js-note-taker/)
-
 * [GitHub repository with application code](https://github.com/hanhle1989/express.js-note-taker)
 
 ## Copyright (c) 2021 Hanh Le
